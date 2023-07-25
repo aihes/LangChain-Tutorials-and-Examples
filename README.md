@@ -14,6 +14,7 @@
 - [Chains](https://github.com/aihes/LangChain-Tutorials-and-Examples#chains)
 - [Memory](https://github.com/aihes/LangChain-Tutorials-and-Examples#memory)
 - [Agent](https://github.com/aihes/LangChain-Tutorials-and-Examples#memory)
+- [Debug](https://github.com/aihes/LangChain-Tutorials-and-Examples#debug)
 
 [四、LangChain应用案例](https://github.com/aihes/LangChain-Tutorials-and-Examples#memory)
 
@@ -292,9 +293,28 @@ initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbos
 
 
 
+### Debug
 
+LangChain是一个方便开发大语言模型（LLM）应用和代理（Agents）的工具。然而，将LLM应用部署到生产环境可能会遇到许多困难。需要对你的提示（prompts）、链（chains）和其他组件进行大量的定制和迭代，才能创建出高质量的产品。
 
+最简单的调试方式：设置langchain.debug 和 langchain.verbose
 
+LangChain官方推出了LangSmith：用于更方便的构建生产级别的LLM应用。它允许您调试、测试、评估和监控基于任何LLM框架构建的链和智能代理，并与LangChain无缝集成
+除了LangSmith，还有另外一个工具WanDB用于方便我们调试大模型的应用。
+
+关于WanDB
+1、注册账号，新建项目，记住apiKey；
+2、两种使用方式：
+在环境变量中设置os.environ["LANGCHAIN_WANDB_TRACING"] = "true”
+使用wandb_tracing_enabled()追踪特定块的代码
+3、登录WanDB后台查看链路
+
+![img.png](images/wandb_code.png)
+![img.png](images/wandb_demo.png)
+
+有时候写LLM应用，发现返回的不符合预期，可以从这里看到输入的Prompt，了解每个过程；
+或者想要学习专家们是如何写Prompt的都可以在这里看到
+![img_1.png](images/wandb_demo1.png)
 
 ## 四、LangChain应用案例
 
@@ -610,6 +630,11 @@ langfow
 
 可以参考本仓库的practice目录
 
+其它可以尝试的应用：
+- 关键信息提取，答疑
+- 信息结构化：自动填表单
+- 推荐、检索和加工。
+
 
 
 
@@ -684,5 +709,10 @@ LangChain为构建基于大型语言模型的应用提供了一个强大的框�
 
 
 ## 最后
+介绍下我们团队:
+大淘宝技术用户运营平台技术团队是一支最懂用户，技术驱动的年轻队伍，以用户为中心，通过技术创新提升用户全生命周期体验，持续为用户创造价值。
+我们提供“增长黑客”极客氛围和丰富的岗位选择，欢迎业界贤才加入。
+
+
 大家也可以加我微信，一块学习交流：
 ![wechat](images/wechat.JPG)
