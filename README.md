@@ -74,7 +74,7 @@ LangChain使这个开发过程更加简单。一经推出后，在社区被广�
 
 
 
-![image-20230725081355551](images/image-20230725081355551.png)
+![img.png](images/langchain_core_module.png)
 
 
 
