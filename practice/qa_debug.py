@@ -53,3 +53,74 @@
 #                                # memory=memory
 #                                )
 # agent_chain.run("我想生成一个性别为男并且在180天访问过淘特的人群?")
+
+
+import re
+from typing import Union
+
+class AgentOutputParser:
+    """A generic agent output parser."""
+    pass
+
+class AgentAction:
+    """A generic agent action."""
+    def __init__(self, action, action_input, text):
+        self.action = action
+        self.action_input = action_input
+        self.text = text
+
+class AgentFinish(AgentAction):
+    """A generic agent finish action."""
+    pass
+
+class OutputParserException(Exception):
+    """An exception thrown when the output parser fails."""
+    pass
+
+# 这里是原来的 ReActOutputParser 类
+
+class ReActOutputParser(AgentOutputParser):
+    """Output parser for the ReAct agent."""
+
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        action_prefix = "Action: "
+        if not text.strip().split("\n")[-1].startswith(action_prefix):
+            raise OutputParserException(f"Could not parse LLM Output: {text}")
+        action_block = text.strip().split("\n")[-1]
+
+        action_str = action_block[len(action_prefix) :]
+        # Parse out the action and the directive.
+        re_matches = re.search(r"(.*?)\[(.*?)\]", action_str)
+        if re_matches is None:
+            raise OutputParserException(
+                f"Could not parse action directive: {action_str}"
+            )
+        action, action_input = re_matches.group(1), re_matches.group(2)
+        if action == "Finish":
+            return AgentFinish(action, action_input, text)
+        else:
+            return AgentAction(action, action_input, text)
+
+    @property
+    def _type(self) -> str:
+        return "react"
+
+# 测试代码
+
+parser = ReActOutputParser()
+
+# 这是一个有效的代理输出
+valid_output = "Some text\nAction: Move[Forward]"
+try:
+    action = parser.parse(valid_output)
+    print(f"Action: {action.action}, Input: {action.action_input}")
+except OutputParserException as e:
+    print(str(e))
+
+# 这是一个无效的代理输出
+invalid_output = "Some text\nInvalid action"
+try:
+    action = parser.parse(invalid_output)
+    print(f"Action: {action.action}, Input: {action.action_input}")
+except OutputParserException as e:
+    print(str(e))
