@@ -1,3 +1,5 @@
+视频地址：https://www.bilibili.com/video/BV1Pz4y147hp/
+
 ## 目录
 
 [一、引言](https://github.com/aihes/LangChain-Tutorials-and-Examples#%E4%B8%80%E5%BC%95%E8%A8%80)
